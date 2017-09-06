@@ -47,7 +47,6 @@ def addMins(minutes):
 		out += "         "
 
 
-
 	if minutes in [5,6,7,23,24,25,26]:
 		out += "пять   "
 	elif minutes in [33,34,35,36,37,53,54,55,56]:
