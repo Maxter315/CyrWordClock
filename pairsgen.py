@@ -62,6 +62,73 @@ def addMins(minutes):
 
 	return out
 
+def addHours(hrs, mins, ampm):
+	hours_list = ["ноль","один","два","три","четыре","пять","шесть","семь","восемь","девять","десять","одиннадцать","двенадцать"]
+	hours_list_e = ["первого","второго","третьего","четвертого","пятого","шестого","седьмого","восьмого","девятого","десятого","одиннадцатого","двенадцатого"]
+	out = ""
+	daytime_list = ["утра","дня","вечера","ночи"]
+
+	if mins in range(3,33):
+		out += hours_list_e[hrs%12]
+		out += " " * (15+7 - len(out)/2)
+	else:
+		if mins in range(0,3):
+			out += hours_list[hrs]
+		else:
+			out += hours_list[hrs%12+1]
+
+		out += " " * (15 - len(out)/2)
+
+		if mins in range(0,3):
+			if hrs == 1:
+				out += "час    "
+			elif hrs in [2,3,4]:
+				out += "часa   "
+			else:
+				out += "часов  "
+		else:
+			if hrs == 12:
+				out += "час    "
+			elif hrs in [1,2,3]:
+				out += "часa   "
+			else:
+				out += "часов  "
+
+		if ampm == "am":
+			if hrs in range(0,4) + [12]:
+				out += daytime_list[3]
+			
+			if hrs in range(4,12):
+				out += daytime_list[0]
+		else:
+			if hrs in range(0,6) + [12]:
+				out += daytime_list[1]
+
+			if hrs in range(6,12):
+				out += daytime_list[2]
+
+	return out
+
+def addDay(hours, ampm):
+	daytime_list = ["утра","дня","вечера","ночи"]
+
+	if ampm == "am":
+		if hours in range(0,4) + [12]:
+			out = daytime_list[3]
+		
+		if hours in range(4,12):
+			out = daytime_list[0]
+	else:
+		if hours in range(0,6) + [12]:
+			out = daytime_list[1]
+
+		if hours in range(6,12):
+			out = daytime_list[2]
+
+	out += " " * (8 - len(out)/2)
+
+	return out
+
 
 
 
@@ -101,6 +168,8 @@ with open(filename, "wb") as fout:
 				words = addEqual(mins)
 				words += addWithout(mins)
 				words += addMins(mins)
+				words += addHours(hours, mins, ampm)
+				#words += addDay(hours, ampm)
 
 
 				fout.write(timecase + "\t" + words + '\n')
